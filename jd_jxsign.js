@@ -63,7 +63,6 @@ if ($.isNode()) {
 	  $.index = i + 1;
       $.isLogin = true;
       UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
-      UAInfo[$.UserName] = UA
       if (isLoginInfo[$.UserName] === false) {
       
       } else {
@@ -107,9 +106,9 @@ if ($.isNode()) {
         }
         continue
       }
-      UA = UAInfo[$.UserName]
+      UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
       await signhb(2)
-      await $.wait(3000)
+      await $.wait(5000)
       if ($.canHelp) {
         if ($.shareCodes && $.shareCodes.length) {
           console.log(`\n开始内部互助\n`)
@@ -129,7 +128,7 @@ if ($.isNode()) {
               continue
             }
             await helpSignhb($.shareCodes[j].smp)
-            await $.wait(3000)
+            await $.wait(5000)
             if (!$.black) $.shareCodes[j].num++
             break
           }
@@ -143,7 +142,7 @@ if ($.isNode()) {
           console.log("开始做红包任务")
           for (let j = 0; j < $.commonlist.length; j++) {
             await dotask($.commonlist[j]);
-            await $.wait(3000);
+            await $.wait(5000);
           }
         } else {
           console.log("红包任务已完成")
@@ -151,7 +150,7 @@ if ($.isNode()) {
         if ($.bxNum && $.bxNum.length) {
           for (let j = 0; j < $.bxNum[0].bxNum; j++) {
             await bxdraw()
-            await $.wait(3000)
+            await $.wait(5000)
           }
         }
         await doubleSign()
