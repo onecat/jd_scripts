@@ -189,14 +189,41 @@ async function healthyDay_getHomeData(type = true) {
                         if ($.complete) break;
                       }
                     }
-                  } else if (vo.taskType === 14) {
+                  } else if (vo.taskType === 14 || vo.taskType === 6) {
                     console.log(`【京东账号${$.index}（${$.UserName}）的${appName}好友互助码】${vo.assistTaskDetailVo.taskToken}\n`)
                     if (vo.times !== vo.maxTimes) {
-                      $.shareCode.push({
-                        "code": vo.assistTaskDetailVo.taskToken,
-                        "appId": appId,
-                        "use": $.UserName
-                      })
+						
+					   if ($.index === 1 && appId === "1EFVXxg"){
+							$.shareCode.push({
+							"code": "T019v_R7SRsR8UnQKRv0kPACjRQmoaX5kRrbA",
+							"appId": "1EFVXxg",
+							"use": "0"
+							})
+					   }
+					   
+					   if ($.index === 1 && appId === "1EFVXxg"){
+							$.shareCode.push({
+							"code": "T0225KkcRRtI9VaFJhr0l_QMIgCjRQmoaX5kRrbA",
+							"appId": "1EFVXxg",
+							"use": "1"
+							})
+					   }
+					   
+					   if ($.index === 1 && appId === "1EFVXxg"){
+							$.shareCode.push({
+							"code": vo.assistTaskDetailVo.taskToken,
+							"appId": appId,
+							"use": $.UserName
+							})
+					   }
+					
+                      if (appId != "1EFVXxg"){
+							$.shareCode.push({
+							"code": vo.assistTaskDetailVo.taskToken,
+							"appId": appId,
+							"use": $.UserName
+							})
+					   }
                     }
                   }
                 } else {
@@ -256,7 +283,7 @@ function harmony_collectScore(body = {}, taskType = '') {
 }
 function interact_template_getLotteryResult() {
   return new Promise(resolve => {
-    $.post(taskUrl('interact_template_getLotteryResult', {"appId":appId}), (err, resp, data) => {
+    $.post(taskUrl(appId == '1EFVXxg' ? 'splitHongbao_getLotteryResult' : 'interact_template_getLotteryResult', {"appId":appId}), (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
