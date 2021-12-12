@@ -4,7 +4,7 @@
 
 **/
 
-const $ = new Env("一次性200豆");
+const $ = new Env("车头一次性200豆");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '';
