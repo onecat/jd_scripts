@@ -88,7 +88,7 @@ async function jdSuperMarket() {
     await smtgHome();
     await receiveUserUpgradeBlue();
     await Home();
-    await helpAuthor();
+    //await helpAuthor();
   } catch (e) {
     $.logErr(e)
   }
