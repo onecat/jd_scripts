@@ -111,7 +111,7 @@ let allMessage = '';
 async function jdConnoisseur() {
   await getActiveInfo()
   await $.wait(2000)
-  await getshareCode()
+  //await getshareCode()
 }
 
 async function getActiveInfo(url = 'https://prodev.m.jd.com/mall/active/2y1S9xVYdTud2VmFqhHbkcoAYhJT/index.html') {
