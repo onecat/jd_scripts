@@ -76,6 +76,9 @@ if ($.isNode()) {
         continue
       }
       UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
+      let time = Math.random() * 9876 + 10000
+      console.log(`等待${(time/1000).toFixed(3)}秒`)
+      await $.wait(parseInt(time, 10))
       await signhb()
       await $.wait(2000)
       if (!$.black) {
@@ -83,7 +86,7 @@ if ($.isNode()) {
           console.log("开始做喜豆任务")
           for (let j = 0; j < $.commonlist.length && !$.black; j++) {
             await dotask($.commonlist[j]);
-            await $.wait(2000);
+            await $.wait(5000);
           }
         } else {
           console.log("喜豆任务已完成")
