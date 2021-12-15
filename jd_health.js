@@ -26,6 +26,16 @@ let cookiesArr = [], cookie = "", allMessage = "", message;
 const inviteCodes = ['T019v_R7SRsR8UnQKRv0kPACjVfnoaW5kRrbA','T0225KkcRRtI9VaFJhr0l_QMIgCjVfnoaW5kRrbA']
 const randomCount = 20;
 let reward = '20';
+function oc(fn, defaultVal) {//optioanl chaining
+  try {
+    return fn()
+  } catch (e) {
+    return undefined
+  }
+}
+function nc(val1, val2) {//nullish coalescing
+  return val1 != undefined ? val1 : val2
+}
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item]);
