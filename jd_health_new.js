@@ -7,17 +7,17 @@
 ===================quantumultx================
 [task_local]
 #东东健康社区
-13 1,6,22 * * * jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+40 0,6,15,21 * * * jd_health_new.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 =====================Loon================
 [Script]
-cron "13 1,6,22 * * *" script-path=jd_health.js, tag=东东健康社区
+cron "40 0,6,15,21 * * *" script-path=jd_health_new.js, tag=东东健康社区
 
 ====================Surge================
-东东健康社区 = type=cron,cronexp="13 1,6,22 * * *",wake-system=1,timeout=3600,script-path=jd_health.js
+东东健康社区 = type=cron,cronexp="40 0,6,15,21 * * *",wake-system=1,timeout=3600,script-path=jd_health_new.js
 
 ============小火箭=========
-东东健康社区 = type=cron,script-path=jd_health.js, cronexpr="13 1,6,22 * * *", timeout=3600, enable=true
+东东健康社区 = type=cron,script-path=jd_health_new.js, cronexpr="40 0,6,15,21 * * *", timeout=3600, enable=true
  */
 const $ = new Env("东东健康社区");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
@@ -79,6 +79,7 @@ async function main() {
   try {
     $.score = 0
     $.earn = false
+	await exchange(2, 4)
     await getTaskDetail(-1)
     await getTaskDetail(16)
     await getTaskDetail(6)
@@ -93,9 +94,9 @@ async function main() {
     await getTaskDetail(22);
     await getTaskDetail(-1)
 
-    if (reward) {
-      await getCommodities()
-    }
+    //if (reward) {
+    //  await getCommodities()
+    //}
 
   } catch (e) {
     $.logErr(e)
