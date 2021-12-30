@@ -475,7 +475,7 @@ function getMs() {
                 } else {
                     if (safeGet(data)) {
                         data = JSON.parse(data)
-                        console.log(data)
+                        //console.log(data)
                         if (data.code === 2041 || data.code === 2060) {
                             $.JdMsScore = data.result.assignment.assignmentPoints || 0
                         }
