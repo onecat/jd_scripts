@@ -8,7 +8,7 @@ by:小手冰凉 tg:@chianPLA
 ===================quantumultx================
 [task_local]
 #京东金榜
-33 4 * * * jd_gold_sign.js, tag=京东金榜, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+13 8 * * * jd_gold_sign.js, tag=京东金榜, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
  */
 const $ = new Env('京东金榜');
@@ -47,7 +47,19 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       $.nickName = '';
       message = '';
       $.UUID = getUUID('xxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxx');
+      await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
+      if (!$.isLogin) {
+        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, { "open-url": "https://bean.m.jd.com/" });
+
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        } else {
+          $.setdata('', `CookieJD${i ? i + 1 : ""}`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        }
+        continue
+      }
+      await goldCreatorDoTask({ "type": 1 })
       await goldCenterHead();
 
     }
@@ -75,11 +87,9 @@ function goldCenterHead() {
           if (safeGet(data)) {
             data = JSON.parse(data)
             if (data.code === '0') {
-              // console.log(data);
               if (data.result.medalNum === 5) {
+                await $.wait(1500)
                 await goldCreatorDoTask({ "type": 2 })
-              } else {
-                await goldCreatorDoTask({ "type": 1 })
               }
             } else {
               console.log(`失败：${JSON.stringify(data)}\n`);
@@ -98,7 +108,6 @@ function goldCenterHead() {
 function goldCreatorDoTask(body) {
   return new Promise(resolve => {
     const options = taskUrl('goldCenterDoTask', body)
-    // console.log(options);
     $.get(options, async (err, resp, data) => {
       try {
         if (err) {
