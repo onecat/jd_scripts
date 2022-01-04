@@ -6,7 +6,7 @@ https://3.cn/103-VBNoE
 
 如需加购请设置环境变量[guaunknownTask_addSku5]为"true"
 
-5 10 3-5 1 * https://raw.githubusercontent.com/smiek2221/scripts/master/gua_UnknownTask5.js
+5 10 3-5 1 * https://raw.githubusercontent.com/smiek2221/scripts/master/jd_UnknownTask5.js
 */
 let guaopencard = "false"
 let guaunknownTask_addSku = "false"
