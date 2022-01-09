@@ -60,16 +60,20 @@ $.appId = "76a41";
           if(!$.InviteList[c]) continue
           let n = 0
           let s = 0
+          let res = 0
           for(o in $.InviteList[c] || []){
             s = -1
             let item = $.InviteList[c][o]
             if(!item) continue
             s = 1
-            let res = await help(c,item)
+            res = await help(c,item)
             if(res == true){
               delete $.InviteList[c][o]
               console.log(`助力[${c}->${item}]成功`)
               n++;
+            }else if(res === 2){
+              await $.wait(parseInt(Math.random() * 2000 + 4000, 10))
+              break
             }else{
               console.log(`助力[${c}->${item}]失败`)
             }
@@ -78,6 +82,7 @@ $.appId = "76a41";
           if(n == $.InviteList[c].length || s == -1){
             delete $.InviteList[c]
           }
+          if(res === 2) break
         }
         if(Object.getOwnPropertyNames($.InviteList).length == 0) break
       }
@@ -273,7 +278,7 @@ async function BestWishes() {
 }
 // 助力
 async function help(shareId,id){
-  let status = false
+  let status = 0
   try{
     let res = ''
     if(typeof id == 'string' && id.indexOf('-=-') > -1) id = id.split('-=-') && id.split('-=-')[0]
@@ -297,11 +302,14 @@ async function help(shareId,id){
         if(res.data.awardType != 0) msg += `${res.data.prizeDesc}${res.data.prizeType}${res.data.prizeName}`
       }
       if(msg) {
-        status = true
+        status = 1
         console.log("助力获得："+msg)
       }
     }else if(res.sErrMsg || res.msg){
       console.log('助力失败:'+res.sErrMsg || res.msg)
+      if((res.sErrMsg || res.msg).indexOf("今天助力次数已满") > -1){
+        status = 2
+      }
     }else{
       console.log('助力失败\n'+$.toStr(res,res))
     }
