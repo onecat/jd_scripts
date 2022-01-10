@@ -11,7 +11,7 @@ SCLyQi4换成自己的返利
 export gua_nhjRed_rebateCode="SCLyQi4"
 */
 
-let rebateCodes = 'SdMXCgw'
+let rebateCodes = 'SIblzH0'
 
 const $ = new Env('年货节红包');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
