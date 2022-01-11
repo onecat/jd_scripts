@@ -6,17 +6,17 @@
 ============Quantumultx===============
 [task_local]
 #京东超级盒子
-24 3,13 * * * https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js, tag=京东超级盒子, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
+24 3,13,20 * * * https://raw.githubusercontent.com/msechen/script/main/jd_super_box.js, tag=京东超级盒子, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "24 3,13 * * *" script-path=https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js,tag=京东超级盒子
+cron "24 3,13,20 * * *" script-path=https://raw.githubusercontent.com/msechen/script/main/jd_super_box.js,tag=京东超级盒子
 
 ===============Surge=================
-京东超级盒子 = type=cron,cronexp="24 3,13 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js
+京东超级盒子 = type=cron,cronexp="24 3,13,20 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/msechen/script/main/jd_super_box.js
 
 ============小火箭=========
-京东超级盒子 = type=cron,script-path=https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js, cronexpr="24 3,13 * * *", timeout=3600, enable=true
+京东超级盒子 = type=cron,script-path=https://raw.githubusercontent.com/msechen/script/main/jd_super_box.js, cronexpr="24 3,13,20 * * *", timeout=3600, enable=true
  */
 
 const $ = new Env('京东超级盒子');
