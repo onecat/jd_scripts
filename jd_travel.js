@@ -6,7 +6,12 @@ TG https://t.me/aaron_scriptsG
 const $ = new Env('炸年兽');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
-let cookiesArr = [], cookie = '', message, helpCodeArr = [{pin: '作者',code: 'ZXASTT019v_R7SRsR8UnQKRv0kPAFjRWn6W7zB55awQ'},{pin: '作者',code: 'ZXASTT0225KkcRRtI9VaFJhr0l_QMIgFjRWn6W7zB55awQ'},{pin: '作者',code: 'ZXASTT0225KkcR08e9lfXKUj0lf9ccgFjRWn6W7zB55awQ'}], expandHelpArr = [], helpPinArr = [], wxCookie = "";
+let cookiesArr = [], cookie = '', message, helpCodeArr = [{pin: '作者',code: 'ZXASTT0225KkcR08e9lfXKUj0lf9ccgFjRWn6W7zB55awQ'},{pin: '作者',code: 'ZXASTT0205KkcIkFTpye-eUeQ1KJTFjRWn6W7zB55awQ'},{pin: '作者',code: 'ZXASTT0225KkcRUpK_FbWIBLxnfVedAFjRWn6W7zB55awQ'},{pin: '作者',code: 'ZXASTT0205KkcG01ZsBaSQUam_opsFjRWn6W7zB55awQ'},{pin: '作者',code: 'ZXASTT020vPV2Rx8c81DKIhP8lv4NFjRWn6W7zB55awQ'},{pin: '作者',code: 'ZXASTT0143bguHUtbhgyIaQFjRWn6W7zB55awQ'},{pin: '作者',code: 'ZXASTT012a3PtlZCHLfJXFjRWn6W7zB55awQ'},{pin: '作者',code: 'ZXASTT020t_txQBwR8l3KIhL3kPMNFjRWn6W7zB55awQ'}], expandHelpArr = [], helpPinArr = [], wxCookie = "";
+
+if (process.env.JD_helpCodeArr) {
+    helpCodeArr = []
+}
+
 let wxCookieArr = process.env.WXCookie?.split("@") || []
 const teamLeaderArr = [], teamPlayerAutoTeam = {}
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
