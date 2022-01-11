@@ -99,7 +99,7 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
             }            
             //开箱
             console.log(`京东账号${$.index}去开箱`)
-            for (let y = 0; y < $.lotteryNumber; y++) {
+            for (let y = 0; y < 300; y++) {
                 console.log(`可以开箱${$.lotteryNumber}次 ==>>第${y+1}次开箱`)
                 await openBox({ "linkId": "Ll3Qb2mhCXSEWxruhv8qIw", "encryptPin": "" });
                 await $.wait(1000);
