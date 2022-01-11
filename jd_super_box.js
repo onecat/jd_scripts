@@ -6,17 +6,17 @@
 ============Quantumultx===============
 [task_local]
 #京东超级盒子
-24 3,13 * * * https://raw.githubusercontent.com/msechen/script/main/jd_super_box.js, tag=京东超级盒子, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
+24 3,13 * * * https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js, tag=京东超级盒子, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "24 3,13 * * *" script-path=https://raw.githubusercontent.com/msechen/script/main/jd_super_box.js,tag=京东超级盒子
+cron "24 3,13 * * *" script-path=https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js,tag=京东超级盒子
 
 ===============Surge=================
-京东超级盒子 = type=cron,cronexp="24 3,13 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/msechen/script/main/jd_super_box.js
+京东超级盒子 = type=cron,cronexp="24 3,13 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js
 
 ============小火箭=========
-京东超级盒子 = type=cron,script-path=https://raw.githubusercontent.com/msechen/script/main/jd_super_box.js, cronexpr="24 3,13 * * *", timeout=3600, enable=true
+京东超级盒子 = type=cron,script-path=https://raw.githubusercontent.com/msechen/script/main/jd_cjhz.js, cronexpr="24 3,13 * * *", timeout=3600, enable=true
  */
 
 const $ = new Env('京东超级盒子');
@@ -27,7 +27,7 @@ let cookiesArr = [],
     cookie = '',
     secretp = '',
     joyToken = "";
-$.shareCoseList = [];
+$.shareCoseList = ['Xx33Brrod56EjLp84YQz1w','jEEqauh3scwZiswwKd_47os-FTBxr-oceiCIf7F6ey8'];
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -64,7 +64,7 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
             await main()
         }
     };
-    $.shareCoseList = [...new Set([...$.shareCoseList,'QmLpaFXm34BaWgn3C3O2WA','ffn_Yc--WKEab2iPzmVB4BM3VKR8-0h7mdYsY627fC0'])]
+    $.shareCoseList = [...new Set([...$.shareCoseList])]
     //去助力与开箱
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
@@ -99,7 +99,7 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
             }            
             //开箱
             console.log(`京东账号${$.index}去开箱`)
-            for (let y = 0; y < 300; y++) {
+            for (let y = 0; y < $.lotteryNumber; y++) {
                 console.log(`可以开箱${$.lotteryNumber}次 ==>>第${y+1}次开箱`)
                 await openBox({ "linkId": "Ll3Qb2mhCXSEWxruhv8qIw", "encryptPin": "" });
                 await $.wait(1000);
