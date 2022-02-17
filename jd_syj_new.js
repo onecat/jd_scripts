@@ -2,23 +2,23 @@
 赚京豆-瓜分京豆脚本，一：做任务 天天领京豆(加速领京豆)
 Last Modified time: 2022-2-8 
 活动入口：赚京豆-瓜分京豆(微信小程序)-赚京豆-瓜分京豆-瓜分京豆
-更新地址：jd_syj.js
+更新地址：jd_syj_new.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #赚京豆-瓜分京豆
-10 4,9,12 * * * jd_syj.js, tag=赚京豆-瓜分京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
+10 4,9,12 * * * jd_syj_new.js, tag=赚京豆-瓜分京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 4,9,12 * * *" script-path=jd_syj.js, tag=赚京豆-瓜分京豆
+cron "10 4,9,12 * * *" script-path=jd_syj_new.js, tag=赚京豆-瓜分京豆
 
 ===============Surge=================
-赚京豆-瓜分京豆 = type=cron,cronexp="10 0,7,23 * * *",wake-system=1,timeout=3600,script-path=jd_syj.js
+赚京豆-瓜分京豆 = type=cron,cronexp="10 4,9,12 * * *",wake-system=1,timeout=3600,script-path=jd_syj_new.js
 
 ============小火箭=========
-赚京豆-瓜分京豆 = type=cron,script-path=jd_syj.js, cronexpr="10 0,7,23 * * *", timeout=3600, enable=true
+赚京豆-瓜分京豆 = type=cron,script-path=jd_syj_new.js, cronexpr="10 4,9,12 * * *", timeout=3600, enable=true
  */
 const $ = new Env('赚京豆-瓜分京豆');
 $.appId = 'dde2b';
