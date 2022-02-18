@@ -2,23 +2,23 @@
 赚京豆-瓜分京豆脚本，一：做任务 天天领京豆(加速领京豆)
 Last Modified time: 2022-2-8 
 活动入口：赚京豆-瓜分京豆(微信小程序)-赚京豆-瓜分京豆-瓜分京豆
-更新地址：jd_syj_new.js
+更新地址：jd_syj.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #赚京豆-瓜分京豆
-10 4,9,12 * * * jd_syj_new.js, tag=赚京豆-瓜分京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
+10 4,6,8,12,18 * * * jd_syj.js, tag=赚京豆-瓜分京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 4,9,12 * * *" script-path=jd_syj_new.js, tag=赚京豆-瓜分京豆
+cron "10 4,6,8,12,18 * * *" script-path=jd_syj.js, tag=赚京豆-瓜分京豆
 
 ===============Surge=================
-赚京豆-瓜分京豆 = type=cron,cronexp="10 4,9,12 * * *",wake-system=1,timeout=3600,script-path=jd_syj_new.js
+赚京豆-瓜分京豆 = type=cron,cronexp="10 4,6,8,12,18 * * *",wake-system=1,timeout=3600,script-path=jd_syj.js
 
 ============小火箭=========
-赚京豆-瓜分京豆 = type=cron,script-path=jd_syj_new.js, cronexpr="10 4,9,12 * * *", timeout=3600, enable=true
+赚京豆-瓜分京豆 = type=cron,script-path=jd_syj.js, cronexpr="10 4,6,8,12,18 * * *", timeout=3600, enable=true
  */
 const $ = new Env('赚京豆-瓜分京豆');
 $.appId = 'dde2b';
@@ -87,10 +87,16 @@ let do_syj = process.env.JD_SYJ ? process.env.JD_SYJ : true;
       if ((cookiesArr.length > $.assistNum)) {
         if ($.tuanList.length) 
         $.log($.tuanList.length)
-        console.log(`开始账号内部互助 赚京豆-瓜分京豆-瓜分京豆 内部账号互助`)
+        //console.log(`开始账号内部互助 赚京豆-瓜分京豆-瓜分京豆 内部账号互助`)
         for (let j = 0; j < $.tuanList.length; ++j) {
+          $.max = false;
           console.log(`账号 ${$.UserName} 开始给 【${$.tuanList[j]['assistedPinEncrypted']}】助力`)
           await helpFriendTuan($.tuanList[j]['activityIdEncrypted'],$.tuanList[j]['assistStartRecordId'],$.tuanList[j]['assistedPinEncrypted'])
+		  if ($.max) {
+			$.tuanList.splice(j, 1)
+			j--
+			continue
+		  }
           if(!$.canHelp) break
           await $.wait(3000)
         }
@@ -250,7 +256,7 @@ function helpFriendTuan(activityIdEncrypted='',assistStartRecordId='',assistedPi
             } else {
               if (data.resultCode === '9200008') console.log('助力结果：不能助力自己\n')
               else if (data.resultCode === '9200011') console.log('助力结果：已经助力过\n')
-              else if (data.resultCode === '2400205') console.log('助力结果：团已满\n')
+              else if (data.resultCode === '2400205') {console.log('助力结果：团已满\n');$.max = true;}
               else if (data.resultCode === '2400203') {console.log('助力结果：助力次数已耗尽\n');$.canHelp = false}
               else if (data.resultCode === '9000000') {console.log('助力结果：活动火爆，跳出\n');$.canHelp = false}
               else if (data.resultCode === '9000013') {console.log('助力结果：活动火爆，跳出\n');$.canHelp = false}
