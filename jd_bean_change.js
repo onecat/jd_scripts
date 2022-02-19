@@ -61,16 +61,6 @@ let strSubNotify="";
 let llPetError=false;
 let strGuoqi="";
 let RemainMessage = '\n';
-RemainMessage += "⭕活动攻略:⭕" + '\n';
-RemainMessage += '【极速金币】京东极速版->我的->金币(极速版使用)\n';
-RemainMessage += '【京东赚赚】微信->京东赚赚小程序->底部赚好礼->提现无门槛红包(京东使用)\n';
-RemainMessage += '【京东秒杀】京东->中间频道往右划找到京东秒杀->中间点立即签到->兑换无门槛红包(京东使用)\n';
-RemainMessage += '【东东萌宠】京东->我的->东东萌宠,完成是京东红包,可以用于京东app的任意商品\n';
-RemainMessage += '【领现金】京东->我的->东东萌宠->领现金(微信提现+京东红包)\n';
-RemainMessage += '【东东农场】京东->我的->东东农场,完成是京东红包,可以用于京东app的任意商品\n';
-RemainMessage += '【京喜工厂】京喜->我的->京喜工厂,完成是商品红包,用于购买指定商品(不兑换会过期)\n';
-RemainMessage += '【京东金融】京东金融app->我的->养猪猪,完成是白条支付券,支付方式选白条支付时立减.\n';
-RemainMessage += '【其他】京喜红包只能在京喜使用,其他同理';
 
 let WP_APP_TOKEN_ONE = "";
 
@@ -98,7 +88,7 @@ else
 	console.log(`检测到未配置Wxpusher的Token，禁用一对一推送...`);
 		
 if ($.isNode() && process.env.BEANCHANGE_PERSENT) {
-	intPerSent = parseInt(process.env.BEANCHANGE_PERSENT);
+	intPerSent = 17;
 	console.log(`检测到设定了分段通知:` + intPerSent);
 }
 
@@ -176,7 +166,7 @@ if(DisableIndex!=-1){
 }
 	
 //汪汪乐园
-let EnableJoyPark=true;
+let EnableJoyPark=false;
 DisableIndex = strDisableList.findIndex((item) => item === "汪汪乐园");
 if(DisableIndex!=-1){
 	console.log("检测到设定关闭汪汪乐园查询");
@@ -184,7 +174,7 @@ if(DisableIndex!=-1){
 }
 
 //京东赚赚
-let EnableJdZZ=true;
+let EnableJdZZ=false;
 DisableIndex = strDisableList.findIndex((item) => item === "京东赚赚");
 if(DisableIndex!=-1){
 	console.log("检测到设定关闭京东赚赚查询");
@@ -231,7 +221,7 @@ if(DisableIndex!=-1){
 }
 
 // 京东工厂
-let EnableJDGC=true;
+let EnableJDGC=false;
 DisableIndex=strDisableList.findIndex((item) => item === "京东工厂");
 if(DisableIndex!=-1){
 	console.log("检测到设定关闭京东工厂查询");
@@ -246,7 +236,7 @@ if(DisableIndex!=-1){
 }	
 
 //金融养猪
-let EnablePigPet=true;
+let EnablePigPet=false;
 DisableIndex=strDisableList.findIndex((item) => item === "金融养猪");
 if(DisableIndex!=-1){
 	console.log("检测到设定关闭金融养猪查询");
@@ -431,7 +421,7 @@ if(DisableIndex!=-1){
 	}
 	//组1通知
 	if (ReceiveMessageGp4) {
-		allMessage2Gp4 = `【⏰商品白嫖活动领取提醒⏰】\n` + ReceiveMessageGp4;
+		allMessage2Gp4 = `【⏰商品活动领取提醒⏰】\n` + ReceiveMessageGp4;
 	}
 	if (WarnMessageGp4) {
 		if (allMessage2Gp4) {
