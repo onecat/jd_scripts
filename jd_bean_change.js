@@ -421,46 +421,46 @@ if(DisableIndex!=-1){
 	}
 	//组1通知
 	if (ReceiveMessageGp4) {
-		allMessage2Gp4 = `【⏰商品活动领取提醒⏰】\n` + ReceiveMessageGp4;
+		allMessage2Gp4 = `【⏰京东活动活动领取提醒⏰】\n` + ReceiveMessageGp4;
 	}
 	if (WarnMessageGp4) {
 		if (allMessage2Gp4) {
 			allMessage2Gp4 = `\n` + allMessage2Gp4;
 		}
-		allMessage2Gp4 = `【⏰商品白嫖活动任务提醒⏰】\n` + WarnMessageGp4 + allMessage2Gp4;
+		allMessage2Gp4 = `【⏰京东活动任务提醒⏰】\n` + WarnMessageGp4 + allMessage2Gp4;
 	}
 
 	//组2通知
 	if (ReceiveMessageGp2) {
-		allMessage2Gp2 = `【⏰商品白嫖活动领取提醒⏰】\n` + ReceiveMessageGp2;
+		allMessage2Gp2 = `【⏰京东活动领取提醒⏰】\n` + ReceiveMessageGp2;
 	}
 	if (WarnMessageGp2) {
 		if (allMessage2Gp2) {
 			allMessage2Gp2 = `\n` + allMessage2Gp2;
 		}
-		allMessage2Gp2 = `【⏰商品白嫖活动任务提醒⏰】\n` + WarnMessageGp2 + allMessage2Gp2;
+		allMessage2Gp2 = `【⏰京东活动任务提醒⏰】\n` + WarnMessageGp2 + allMessage2Gp2;
 	}
 
 	//组3通知
 	if (ReceiveMessageGp3) {
-		allMessage2Gp3 = `【⏰商品白嫖活动领取提醒⏰】\n` + ReceiveMessageGp3;
+		allMessage2Gp3 = `【⏰京东活动领取提醒⏰】\n` + ReceiveMessageGp3;
 	}
 	if (WarnMessageGp3) {
 		if (allMessage2Gp3) {
 			allMessage2Gp3 = `\n` + allMessage2Gp3;
 		}
-		allMessage2Gp3 = `【⏰商品白嫖活动任务提醒⏰】\n` + WarnMessageGp3 + allMessage2Gp3;
+		allMessage2Gp3 = `【⏰京东活动任务提醒⏰】\n` + WarnMessageGp3 + allMessage2Gp3;
 	}
 
 	//其他通知
 	if (allReceiveMessage) {
-		allMessage2 = `【⏰商品白嫖活动领取提醒⏰】\n` + allReceiveMessage;
+		allMessage2 = `【⏰京东活动领取提醒⏰】\n` + allReceiveMessage;
 	}
 	if (allWarnMessage) {
 		if (allMessage2) {
 			allMessage2 = `\n` + allMessage2;
 		}
-		allMessage2 = `【⏰商品白嫖活动任务提醒⏰】\n` + allWarnMessage + allMessage2;
+		allMessage2 = `【⏰京东活动任务提醒⏰】\n` + allWarnMessage + allMessage2;
 	}
 
 	if (intPerSent > 0) {
@@ -550,28 +550,28 @@ if(DisableIndex!=-1){
 
 	if ($.isNode() && allMessage2Gp2) {
 		allMessage2Gp2 += RemainMessage;
-		await notify.sendNotify("京东白嫖榜#2", `${allMessage2Gp2}`, {
+		await notify.sendNotify("京东活动#2", `${allMessage2Gp2}`, {
 			url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean`
 		})
 		await $.wait(10 * 1000);
 	}
 	if ($.isNode() && allMessage2Gp3) {
 		allMessage2Gp3 += RemainMessage;
-		await notify.sendNotify("京东白嫖榜#3", `${allMessage2Gp3}`, {
+		await notify.sendNotify("京东活动#3", `${allMessage2Gp3}`, {
 			url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean`
 		})
 		await $.wait(10 * 1000);
 	}
 	if ($.isNode() && allMessage2Gp4) {
 		allMessage2Gp4 += RemainMessage;
-		await notify.sendNotify("京东白嫖榜#4", `${allMessage2Gp4}`, {
+		await notify.sendNotify("京东活动#4", `${allMessage2Gp4}`, {
 			url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean`
 		})
 		await $.wait(10 * 1000);
 	}
 	if ($.isNode() && allMessage2) {
 		allMessage2 += RemainMessage;
-		await notify.sendNotify("京东白嫖榜", `${allMessage2}`, {
+		await notify.sendNotify("京东活动", `${allMessage2}`, {
 			url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean`
 		})
 		await $.wait(10 * 1000);
@@ -958,7 +958,7 @@ async function showMsg() {
 		
 		if (TempBaipiao) {
 			strsummary=strSubNotify+TempBaipiao +strsummary;			
-			TempBaipiao = `【⏰商品白嫖活动提醒⏰】\n` + TempBaipiao;
+			TempBaipiao = `【⏰京东活动提醒⏰】\n` + TempBaipiao;
 			ReturnMessage = TempBaipiao + `\n` + ReturnMessage;			
 		} else {
 			strsummary = strSubNotify + strsummary;				
