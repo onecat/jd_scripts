@@ -87,10 +87,8 @@ if(WP_APP_TOKEN_ONE)
 else
 	console.log(`检测到未配置Wxpusher的Token，禁用一对一推送...`);
 		
-if ($.isNode() && process.env.BEANCHANGE_PERSENT) {
-	intPerSent = 17;
-	console.log(`检测到设定了分段通知:` + intPerSent);
-}
+intPerSent = 17;
+console.log(`检测到设定了分段通知:` + intPerSent);
 
 if ($.isNode() && process.env.BEANCHANGE_USERGP2) {
 	MessageUserGp2 = process.env.BEANCHANGE_USERGP2 ? process.env.BEANCHANGE_USERGP2.split('&') : [];
