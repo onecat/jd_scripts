@@ -341,7 +341,7 @@ if(DisableIndex!=-1){
 			if(EnableJdMs)
 				await getMs();
 			
-			await $.wait(10000);
+			await $.wait(15000);
 			//东东农场			
 			if(EnableJdFruit){
 				await jdfruitRequest('taskInitForFarm', {
