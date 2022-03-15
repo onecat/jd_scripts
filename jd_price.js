@@ -85,7 +85,7 @@ let h5st = ''
          if (i != cookiesArr.length - 1) {
             await jstoken();
          }
-         await $.wait(80 * 1000)
+         await $.wait(100 * 1000)
       }
    }
    if (allMessage) {
