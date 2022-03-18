@@ -344,11 +344,6 @@ if(DisableIndex!=-1){
 			await $.wait(15000);
 			//东东农场			
 			if(EnableJdFruit){
-				await jdfruitRequest('taskInitForFarm', {
-					"version": 14,
-					"channel": 1,
-					"babelChannel": "120"
-				});
 				await getjdfruit();
 			}
 			//极速金币
