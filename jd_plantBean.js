@@ -261,11 +261,15 @@ async function doTask() {
         }
         const { goodShopList, moreShopList } = data;
         for (let i of goodShopList) {
-		        if (j.taskState === '2') {
-		            moreShopListARR.push(j);
-		        }
-		    }
-		}
+          if (i.taskState === '2') {
+            goodShopListARR.push(i);
+          }
+        }
+        for (let j of moreShopList) {
+          if (j.taskState === '2') {
+            moreShopListARR.push(j);
+          }
+        }
         shopList = goodShopListARR.concat(moreShopListARR);
         for (let shop of shopList) {
           const { shopId, shopTaskId } = shop;
