@@ -104,13 +104,21 @@ async function jdPlantBean() {
       message += `【上期时间】${roundList[num - 1].dateDesc.replace('上期 ', '')}\n`;
       message += `【上期成长值】${roundList[num - 1].growth}\n`;
       await receiveNutrients();//定时领取营养液
+      await $.wait(3000)
       await doHelp();//助力
+      await $.wait(3000)
       await doTask();//做日常任务
+      await $.wait(3000)
       await doEgg();
+      await $.wait(3000)
       await stealFriendWater();
+      await $.wait(3000)
       await doCultureBean();
+      await $.wait(3000)
       await doGetReward();
+      await $.wait(3000)
       await showTaskProcess();
+      await $.wait(3000)
       await plantShareSupportList();
     } else {
       console.log(`种豆得豆-初始失败:  ${JSON.stringify($.plantBeanIndexResult)}`);
@@ -402,6 +410,7 @@ async function doHelp() {
       console.log(`\n跳过自己的plantUuid\n`)
       continue
     }
+    await $.wait(3000)
     await helpShare(plantUuid);
     if ($.helpResult && $.helpResult.code === '0') {
       // console.log(`助力好友结果: ${JSON.stringify($.helpResult.data.helpShareRes)}`);
