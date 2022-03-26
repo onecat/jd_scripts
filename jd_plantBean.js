@@ -1,5 +1,5 @@
 /*
-种豆得豆 脚本更新地址：https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean_new.js
+种豆得豆 脚本更新地址：https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js
 更新时间：2021-04-9
 活动入口：京东APP我的-更多工具-种豆得豆
 已支持IOS京东多账号,云端多京东账号
@@ -9,17 +9,17 @@
 每个京东账号每天只能帮助3个人。多出的助力码将会助力失败。
 =====================================Quantumult X=================================
 [task_local]
-21 8-20/4 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean_new.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png, enabled=true
+31 10,21 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png, enabled=true
 
 =====================================Loon================================
 [Script]
-cron "21 8-20/4 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean_new.js,tag=京东种豆得豆
+cron "31 10,21 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js,tag=京东种豆得豆
 
 ======================================Surge==========================
-京东种豆得豆 = type=cron,cronexp="21 8-20/4 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean_new.js
+京东种豆得豆 = type=cron,cronexp="31 10,21 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js
 
 ====================================小火箭=============================
-京东种豆得豆 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean_new.js, cronexpr="21 8-20/4 * * *", timeout=3600, enable=true
+京东种豆得豆 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js, cronexpr="31 10,21 * * *", timeout=3600, enable=true
 
 */
 const $ = new Env('京东种豆得豆');
@@ -414,6 +414,7 @@ async function doHelp() {
     await helpShare(plantUuid);
     if ($.helpResult && $.helpResult.code === '0') {
       // console.log(`助力好友结果: ${JSON.stringify($.helpResult.data.helpShareRes)}`);
+     if (!$.helpResult.data.helpShareRes) continue;
       if ($.helpResult.data.helpShareRes) {
         if ($.helpResult.data.helpShareRes.state === '1') {
           console.log(`助力好友${plantUuid}成功`)
