@@ -69,8 +69,11 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 async function main() {
   try {
     await goldCreatorTab();//获取顶部主题
+     await $.wait(2000);
     await getDetail();
+     await $.wait(2000);
     await goldCreatorPublish();
+     await $.wait(2000);
     await showMsg();
   } catch (e) {
     $.logErr(e)
