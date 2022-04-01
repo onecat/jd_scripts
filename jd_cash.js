@@ -425,45 +425,36 @@ function exchange2(node) {
     })
   })
 }
-function getSign(functionId, body) {
-  return new Promise(async resolve => {
-    let data = {
-      functionId,
-      body: JSON.stringify(body),
-      "client":"apple",
-      "clientVersion":"10.3.0"
+function getSign(functionId, body) {	
+    var strsign = '';
+	let data = {
+      "fn":functionId,
+      "body": body
     }
-    let Host = ""
-    let HostArr = ['jdsign.cf', 'signer.nz.lu']
-    if (process.env.SIGN_URL) {
-      Host = process.env.SIGN_URL
-    } else {
-      Host = HostArr[Math.floor((Math.random() * HostArr.length))]
-    }
-    let options = {
-      url: `https://cdn.nz.lu/ddo`,
-      body: JSON.stringify(data),
-      headers: {
-        Host,
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
-      },
-      timeout: 30 * 1000
-    }
-    $.post(options, (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(JSON.stringify(err))
-          console.log(`${$.name} getSign API请求失败，请检查网路重试`)
-        } else {
-
+    return new Promise((resolve) => {
+        let url = {
+            url: "https://api.jds.codes/jd/sign",
+            body: JSON.stringify(data),
+		    followRedirect: false,
+		    headers: {
+		        'Accept': '*/*',
+		        "accept-encoding": "gzip, deflate, br",
+		        'Content-Type': 'application/json',
+		    },
+		    timeout: 30000
         }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
+        $.post(url, async(err, resp, data) => {
+            try {				
+                data = JSON.parse(data);				
+				strsign=data.data.sign;
+				
+            }catch (e) {
+                $.logErr(e, resp);
+            }finally {
+				resolve(strsign);
+			}
+        })
     })
-  })
 }
 function randomString(e) {
   e = e || 32;
