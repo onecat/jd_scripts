@@ -440,7 +440,7 @@ function getSign(functionId, body) {
 		        'Accept': '*/*',
 		        "accept-encoding": "gzip, deflate, br",
 		        'Content-Type': 'application/json',
-				"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTEyMDY4ODYxLCJpYXQiOjE2NDg4NzA4NTgsImV4cCI6MTY4MDQwNjg1OH0.8sF5gMJYU6Qyppjk2E5je2yf1M7mCsmun2LXlYcIh4E"
+				"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTIxODczMjMwOSwiaWF0IjoxNjQ5NTE1Nzg4LCJleHAiOjE2ODEwNTE3ODh9.TDmYn3Yvj_fetUAdQIohxEPA6Jhfh7_VMU7vkY4cFsQ"
 		    },
 		    timeout: 30000
         }
