@@ -8,17 +8,17 @@
 ============Quantumultx===============
 [task_local]
 #签到领现金
-2 1,6,21 * * * jd_cash.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+2 6 * * * jd_cash_Sign.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "2 1,6,21 * * *" script-path=jd_cash.js,tag=签到领现金
+cron "2 6 * * *" script-path=jd_cash_Sign.js,tag=签到领现金
 
 ===============Surge=================
-签到领现金 = type=cron,cronexp="2 1,6,21 * * *",wake-system=1,timeout=3600,script-path=jd_cash.js
+签到领现金 = type=cron,cronexp="2 6 * * *",wake-system=1,timeout=3600,script-path=jd_cash_Sign.js
 
 ============小火箭=========
-签到领现金 = type=cron,script-path=jd_cash.js, cronexpr="2 1,6,21 * * *", timeout=3600, enable=true
+签到领现金 = type=cron,script-path=jd_cash_Sign.js, cronexpr="2 6 * * *", timeout=3600, enable=true
  */
 const $ = new Env('签到领现金');
 const notify = $.isNode() ? require('./sendNotify') : '';
