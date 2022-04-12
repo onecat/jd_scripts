@@ -8,17 +8,17 @@
 ============Quantumultx===============
 [task_local]
 #签到领现金
-2 6 * * * jd_cash_Sign.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+2 2,22 * * * jd_cash.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "2 6 * * *" script-path=jd_cash_Sign.js,tag=签到领现金
+cron "2 2,22 * * *" script-path=jd_cash.js,tag=签到领现金
 
 ===============Surge=================
-签到领现金 = type=cron,cronexp="2 6 * * *",wake-system=1,timeout=3600,script-path=jd_cash_Sign.js
+签到领现金 = type=cron,cronexp="2 2,22 * * *",wake-system=1,timeout=3600,script-path=jd_cash.js
 
 ============小火箭=========
-签到领现金 = type=cron,script-path=jd_cash_Sign.js, cronexpr="2 6 * * *", timeout=3600, enable=true
+签到领现金 = type=cron,script-path=jd_cash.js, cronexpr="2 2,22 * * *", timeout=3600, enable=true
  */
 const $ = new Env('签到领现金');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -41,7 +41,14 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let allMessage = '';
+let jdPandaToken = '';
+jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `${jdPandaToken}`) : ($.getdata('PandaToken') ? $.getdata('PandaToken') : `${jdPandaToken}`);
+
 !(async () => {
+  if (!jdPandaToken) {
+    console.log('请填写Panda获取的Token,变量是PandaToken');
+    return;
+  }
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
@@ -440,14 +447,26 @@ function getSign(functionId, body) {
 		        'Accept': '*/*',
 		        "accept-encoding": "gzip, deflate, br",
 		        'Content-Type': 'application/json',
-				"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTIxODczMjMwOSwiaWF0IjoxNjQ5NTE1Nzg4LCJleHAiOjE2ODEwNTE3ODh9.TDmYn3Yvj_fetUAdQIohxEPA6Jhfh7_VMU7vkY4cFsQ"
+				'Authorization': 'Bearer ' + jdPandaToken
 		    },
 		    timeout: 30000
         }
         $.post(url, async(err, resp, data) => {
             try {				
                 data = JSON.parse(data);				
-				strsign=data.data.sign;
+				
+				if (data && data.code == 200) {
+                    lnrequesttimes = data.request_times;
+                    console.log("连接Panda服务成功，当前Token使用次数为" + lnrequesttimes);
+                    if (data.data.sign)
+                        strsign = data.data.sign || '';
+                    if (strsign != '')
+                        resolve(strsign);
+                    else
+                        console.log("签名获取失败,可能Token使用次数上限或被封.");
+                } else {
+                    console.log("签名获取失败.");
+                }
 				
             }catch (e) {
                 $.logErr(e, resp);
