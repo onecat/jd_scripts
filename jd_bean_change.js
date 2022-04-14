@@ -74,19 +74,6 @@ RemainMessage += '【京喜工厂】京喜->我的->京喜工厂,完成是商品
 RemainMessage += '【京东金融】京东金融app->我的->养猪猪,完成是白条支付券,支付方式选白条支付时立减.\n';
 RemainMessage += '【其他】京喜红包只能在京喜使用,其他同理';
 
-strUidFile = '/ql/config/CK_WxPusherUid.json';
-let UidFileexists = fs.existsSync(strUidFile);
-let TempCKUid = [];
-if (UidFileexists && WP_APP_TOKEN_ONE) {
-	console.log(`检测到已配置Wxpusher的Token，启用一对一推送...`);
-    console.log("检测到一对一Uid文件WxPusherUid.json，载入...");
-    TempCKUid = fs.readFileSync(strUidFile, 'utf-8');
-    if (TempCKUid) {
-        TempCKUid = TempCKUid.toString();
-        TempCKUid = JSON.parse(TempCKUid);
-    }
-}
-
 let WP_APP_TOKEN_ONE = "";
 
 let TempBaipiao = "";
@@ -106,6 +93,19 @@ if ($.isNode()) {
 			console.log(`检测到设定了临期京豆转换喜豆,但时间未到17点后，暂不执行转换...`);
 		}
 	}
+}
+
+strUidFile = '/ql/config/CK_WxPusherUid.json';
+let UidFileexists = fs.existsSync(strUidFile);
+let TempCKUid = [];
+if (UidFileexists && WP_APP_TOKEN_ONE) {
+	console.log(`检测到已配置Wxpusher的Token，启用一对一推送...`);
+    console.log("检测到一对一Uid文件WxPusherUid.json，载入...");
+    TempCKUid = fs.readFileSync(strUidFile, 'utf-8');
+    if (TempCKUid) {
+        TempCKUid = TempCKUid.toString();
+        TempCKUid = JSON.parse(TempCKUid);
+    }
 }
 		
 intPerSent = 17;
