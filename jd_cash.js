@@ -41,7 +41,7 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let allMessage = '';
-let jdPandaToken = '';
+let jdPandaToken = '', PandaTokenArr = [];
 jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `${jdPandaToken}`) : ($.getdata('PandaToken') ? $.getdata('PandaToken') : `${jdPandaToken}`);
 
 !(async () => {
@@ -49,6 +49,22 @@ jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `
     console.log('请填写Panda获取的Token,变量是PandaToken');
     return;
   }
+  
+  PandaTokenArr = jdPandaToken.split('@')
+  for (let j = 0; j < PandaTokenArr.length; j++) {
+		jdPandaToken = PandaTokenArr[j];
+		await getSign("", "")
+		//console.log(lnrequesttimes)
+		if (lnrequesttimes < 1000) {
+			//await notify.wxpusherNotifyByOne(strTitle, `${ReturnMessage}`, "",TempCKUid[j].Uid)
+			break;
+		}
+  }
+  if (lnrequesttimes > 1000) {
+		console.log("连接Panda服务失败，当前Token使用次数为" + lnrequesttimes);
+		return;
+  }
+  
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
@@ -453,10 +469,14 @@ function getSign(functionId, body) {
         }
         $.post(url, async(err, resp, data) => {
             try {				
-                data = JSON.parse(data);				
-				
+                data = JSON.parse(data);	
 				if (data && data.code == 200) {
                     lnrequesttimes = data.request_times;
+					if(lnrequesttimes>1000)
+					{
+						console.log("连接Panda服务失败，当前Token使用次数为" + lnrequesttimes);
+						return;
+					}
                     console.log("连接Panda服务成功，当前Token使用次数为" + lnrequesttimes);
                     if (data.data.sign)
                         strsign = data.data.sign || '';
@@ -469,7 +489,7 @@ function getSign(functionId, body) {
                 }
 				
             }catch (e) {
-                $.logErr(e, resp);
+                //$.logErr(e, resp);
             }finally {
 				resolve(strsign);
 			}
