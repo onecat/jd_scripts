@@ -41,7 +41,7 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let allMessage = '';
-let jdPandaToken = '', PandaTokenArr = [];
+let jdPandaToken = '', PandaTokenArr = [], lnrequesttimes = 12000;;
 jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `${jdPandaToken}`) : ($.getdata('PandaToken') ? $.getdata('PandaToken') : `${jdPandaToken}`);
 
 !(async () => {
@@ -51,11 +51,12 @@ jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `
   }
   
   PandaTokenArr = jdPandaToken.split('@')
-  for (let j = 0; j < 15; j++) {
+  for (let j = 0; j < 10; j++) {
 		jdPandaToken = PandaTokenArr[random(0, PandaTokenArr.length)];
 		await getSign("", "")
 		console.log(j)
 		console.log(jdPandaToken)
+		console.log(lnrequesttimes)
 		if (lnrequesttimes < 1000) {
 			//await notify.wxpusherNotifyByOne(strTitle, `${ReturnMessage}`, "",TempCKUid[j].Uid)
 			break;
@@ -461,7 +462,7 @@ function getSign(functionId, body) {
     }
     return new Promise((resolve) => {
         let url = {
-            url: "https://api.zhezhe.cf/jd/sign",
+            url: "https://api.jds.codes/jd/sign",
             body: JSON.stringify(data),
 		    followRedirect: false,
 		    headers: {
