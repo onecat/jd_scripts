@@ -52,9 +52,9 @@ jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `
   
   PandaTokenArr = jdPandaToken.split('@')
   for (let j = 0; j < PandaTokenArr.length; j++) {
-		jdPandaToken = PandaTokenArr[j];
+		jdPandaToken = PandaTokenArr[random(0, PandaTokenArr.length)];
 		await getSign("", "")
-		//console.log(lnrequesttimes)
+		//console.log(jdPandaToken)
 		if (lnrequesttimes < 1000) {
 			//await notify.wxpusherNotifyByOne(strTitle, `${ReturnMessage}`, "",TempCKUid[j].Uid)
 			break;
@@ -139,6 +139,10 @@ async function jdCash() {
   // }
   await appindex(true)
   // await showMsg()
+}
+
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 async function appindex(info=false) {
