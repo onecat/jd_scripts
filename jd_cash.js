@@ -41,7 +41,7 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let allMessage = '';
-let jdPandaToken = '', PandaTokenArr = [], lnrequesttimes = 12000;;
+let jdPandaToken = '', PandaTokenArr = [], lnrequesttimes = 12000;
 jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `${jdPandaToken}`) : ($.getdata('PandaToken') ? $.getdata('PandaToken') : `${jdPandaToken}`);
 
 !(async () => {
@@ -462,7 +462,7 @@ function getSign(functionId, body) {
     }
     return new Promise((resolve) => {
         let url = {
-            url: "https://api.jds.codes/jd/sign",
+            url: "https://api.zhezhe.cf/jd/sign",
             body: JSON.stringify(data),
 		    followRedirect: false,
 		    headers: {
@@ -474,8 +474,9 @@ function getSign(functionId, body) {
 		    timeout: 30000
         }
         $.post(url, async(err, resp, data) => {
-            try {				
-                data = JSON.parse(data);	
+            try {
+                console.log(data);				
+                data = JSON.parse(data);
 				if (data && data.code == 200) {
                     lnrequesttimes = data.request_times;
 					if(lnrequesttimes>1000)
@@ -492,6 +493,7 @@ function getSign(functionId, body) {
                         console.log("签名获取失败,可能Token使用次数上限或被封.");
                 } else {
                     console.log("签名获取失败.");
+					return;
                 }
 				
             }catch (e) {
