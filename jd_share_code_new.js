@@ -2,23 +2,23 @@
 一键获取我仓库所有需要互助类脚本的互助码(邀请码)(其中京东赚赚jd_jdzz.js如果今天达到5人助力则不能提取互助码)
 没必要设置(cron)定时执行，需要的时候，自己手动执行一次即可
 
-更新地址：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code_new.js
+更新地址：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #获取互助码
-45 0,1,2,3,10 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code_new.js, tag=获取互助码, enabled=true
+45 0,2,10 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js, tag=获取互助码, enabled=true
 
 ================Loon==============
 [Script]
-cron "45 0,1,2,3,10 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code_new.js, tag=获取互助码
+cron "45 0,2,10 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js, tag=获取互助码
 
 ===============Surge=================
-获取互助码 = type=cron,cronexp="45 0,1,2,3,10 * * *",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code_new.js
+获取互助码 = type=cron,cronexp="45 0,2,10 * * *",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js
 
 ============小火箭=========
-获取互助码 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code_new.js, cronexpr="45 0,1,2,3,10 * * *", timeout=200, enable=true
+获取互助码 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js, cronexpr="45 0,2,10 * * *", timeout=200, enable=true
  */
 const $ = new Env("获取互助码");
 const JD_API_HOST = "https://api.m.jd.com/client.action";
@@ -652,7 +652,7 @@ async function getPlantBean() {
     }
   }
 
-  await jdPlantBean();
+  //await jdPlantBean();
 }
 async function getJDFruit() {
   async function initForFarm() {
@@ -726,7 +726,7 @@ async function getJDFruit() {
     }
   }
 
-  await jdFruit();
+  //await jdFruit();
 }
 async function getJoy(){
   function taskUrl(functionId, body = '') {
@@ -907,10 +907,14 @@ async function getShareCode() {
   console.log(`======账号${$.index}开始======`)
   //await getJdFactory()
   await getJxFactory()
+  await $.wait(3000)
   //await getJxNc()
   await getJdPet()
+  await $.wait(3000)
   await getPlantBean()
+  await $.wait(3000)
   await getJDFruit()
+  await $.wait(3000)
   //await JD_immortal()
   //await getJdZZ()
   //await getJoy()
@@ -999,7 +1003,7 @@ function create(path, name) {
       if (err) {
         $.log(JSON.stringify(err));
         resolve(err);
-        return;
+        //return;
       }
       try {
         const needAgain = await checkWhetherNeedAgain(resp, create, url1, name);
