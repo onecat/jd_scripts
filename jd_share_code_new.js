@@ -652,7 +652,7 @@ async function getPlantBean() {
     }
   }
 
-  //await jdPlantBean();
+  await jdPlantBean();
 }
 async function getJDFruit() {
   async function initForFarm() {
@@ -726,7 +726,7 @@ async function getJDFruit() {
     }
   }
 
-  //await jdFruit();
+  await jdFruit();
 }
 async function getJoy(){
   function taskUrl(functionId, body = '') {
@@ -1028,7 +1028,7 @@ function createh(path, name) {
       if (err) {
         $.log(JSON.stringify(err));
         resolve(err);
-        return;
+        //return;
       }
       try {
         const needAgain = await checkWhetherNeedAgain(resp, create, url1, name);
