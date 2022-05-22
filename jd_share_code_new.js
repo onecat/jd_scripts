@@ -1035,7 +1035,7 @@ function createh(path, name) {
         if (needAgain) return;
         message = JSON.parse(data);
         //$.log(`\n${data}`);
-		//$.log(message.msg);
+		$.log(message.data);
       } catch (e) {
         $.logErr(e, resp);
       } finally {
