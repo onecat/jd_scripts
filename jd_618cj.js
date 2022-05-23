@@ -92,19 +92,19 @@ async function run() {
                 await getReward(vo.taskType, vo.taskItem.itemId, vo.id);
             }
             if (vo.taskType == 3) {
-                console.log(`开始做${vo.taskName}:${vo.taskItem.itemName}`);
+                console.log(`开始做1${vo.taskName}:${vo.taskItem.itemName}`);
                 await getinfo2(vo.taskItem.itemLink);
                 await $.wait(1000 * vo.viewTime)
                 await doTask(vo.taskType, vo.taskItem.itemId, vo.id);
                 await getReward(vo.taskType, vo.taskItem.itemId, vo.id);
             }
             if (vo.taskType == 4) {
-                console.log(`开始做${vo.taskName}:${vo.taskItem.itemName}`);
+                console.log(`开始做2${vo.taskName}:${vo.taskItem.itemName}`);
                 await doTask(vo.taskType, vo.taskItem.itemId, vo.id);
                 await getReward(vo.taskType, vo.taskItem.itemId, vo.id);
             }
             if (vo.taskType == 2) {
-                console.log(`开始做${vo.taskName}:${vo.taskItem.itemName}`);
+                console.log(`开始做3${vo.taskName}:${vo.taskItem.itemName}`);
                 await doTask(vo.taskType, vo.taskItem.itemId, vo.id);
                 await getReward(vo.taskType, vo.taskItem.itemId, vo.id);
             }
