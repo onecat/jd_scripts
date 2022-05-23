@@ -99,9 +99,10 @@ async function run() {
                 await getReward(vo.taskType, vo.taskItem.itemId, vo.id);
             }
             if (vo.taskType == 4) {
-                console.log(`开始做2${vo.taskName}:${vo.taskItem.itemName}`);
-                await doTask(vo.taskType, vo.taskItem.itemId, vo.id);
-                await getReward(vo.taskType, vo.taskItem.itemId, vo.id);
+                console.log("不做加购任务")
+                //console.log(`开始做2${vo.taskName}:${vo.taskItem.itemName}`);
+                //await doTask(vo.taskType, vo.taskItem.itemId, vo.id);
+                //await getReward(vo.taskType, vo.taskItem.itemId, vo.id);
             }
             if (vo.taskType == 2) {
                 console.log(`开始做3${vo.taskName}:${vo.taskItem.itemName}`);
