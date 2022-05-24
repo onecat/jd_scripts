@@ -635,6 +635,7 @@ async function getPlantBean() {
   async function jdPlantBean() {
     await plantBeanIndex();
     // console.log(plantBeanIndexResult.data.taskList);
+	try {
     if ($.plantBeanIndexResult.code === "0") {
       const shareUrl = $.plantBeanIndexResult.data.jwordShareInfo.shareUrl;
       $.myPlantUuid = getParam(shareUrl, "plantUuid");
@@ -650,6 +651,9 @@ async function getPlantBean() {
         `种豆得豆-初始失败:  ${JSON.stringify($.plantBeanIndexResult)}`
       );
     }
+	} catch (e) {
+          //$.logErr(e);
+        }
   }
 
   await jdPlantBean();
