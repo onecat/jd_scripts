@@ -53,7 +53,7 @@ jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `
   PandaTokenArr = jdPandaToken.split('@')
   for (let j = 0; j < 10; j++) {
 		jdPandaToken = PandaTokenArr[random(0, PandaTokenArr.length)];
-		await getSign("", "")
+		await getSign("cash_homePage", "")
 		console.log(j)
 		console.log(jdPandaToken)
 		console.log(lnrequesttimes)
@@ -462,7 +462,7 @@ function getSign(functionId, body) {
     }
     return new Promise((resolve) => {
         let url = {
-            url: "https://pdapi.jdym.cc/jd/sign",
+            url: "https://api.windfgg.cf/jd/sign",
             body: JSON.stringify(data),
 		    followRedirect: false,
 		    headers: {
@@ -485,8 +485,8 @@ function getSign(functionId, body) {
 						return;
 					}
                     console.log("连接Panda服务成功，当前Token使用次数为" + lnrequesttimes);
-                    if (data.data.sign)
-                        strsign = data.data.sign || '';
+                    if (data.data)
+                        strsign = data.data || '';
                     if (strsign != '')
                         resolve(strsign);
                     else
