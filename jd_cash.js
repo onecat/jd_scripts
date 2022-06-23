@@ -7,17 +7,17 @@
  * 满30提现 目前有3、8、15、30的红包
 [task_local]
 #签到领现金
-2 5,20 * * * jd_cash.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+22 7,20 * * * jd_cash_windfg.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "2 5,20 * * *" script-path=jd_cash.js,tag=签到领现金
+cron "22 7,20 * * *" script-path=jd_cash_windfg.js,tag=签到领现金
 
 ===============Surge=================
-签到领现金 = type=cron,cronexp="2 5,20 * * *",wake-system=1,timeout=3600,script-path=jd_cash.js
+签到领现金 = type=cron,cronexp="22 7,20 * * *",wake-system=1,timeout=3600,script-path=jd_cash_windfg.js
 
 ============小火箭=========
-签到领现金 = type=cron,script-path=jd_cash.js, cronexpr="2 5,20 * * *", timeout=3600, enable=true
+签到领现金 = type=cron,script-path=jd_cash_windfg.js, cronexpr="22 7,20 * * *", timeout=3600, enable=true
  */
  const $ = new Env('签到领现金_Windfgg');
  const notify = $.isNode() ? require('./sendNotify') : '';
@@ -36,21 +36,27 @@ cron "2 5,20 * * *" script-path=jd_cash.js,tag=签到领现金
  }
  const JD_API_HOST = 'https://api.m.jd.com/client.action';
  let allMessage = '';
- let jdPandaToken = '', PandaTokenArr = [], lnrequesttimes = 12000;
- jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `${jdPandaToken}`) : ($.getdata('PandaToken') ? $.getdata('PandaToken') : `${jdPandaToken}`);
+ let jdWindfggToken = '', jdWindfggTokenArr = [], lnrequesttimes = 12000;
+ jdWindfggToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `${jdPandaToken}`) : ($.getdata('PandaToken') ? $.getdata('PandaToken') : `${jdPandaToken}`);
+ 
+ if (!jdWindfggToken) {
+		 console.log('\n请前往 https://t.me/wind_fgg   获取Token\n请填写Windfgg获取的Token,变量是WindfggToken');
+     return;
+ }
  
  !(async () => {
+     if (!cookiesArr[0]) {
+         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
+         return;
+     }
+     
 	 
-  if (!jdPandaToken) {
-    console.log('请填写获取的Token,变量是PandaToken');
-    return;
-  }
-  PandaTokenArr = jdPandaToken.split('@')
+	 jdWindfggTokenArr = jdWindfggToken.split('@')
   for (let j = 0; j < 10; j++) {
-		jdPandaToken = PandaTokenArr[random(0, PandaTokenArr.length)];
-		await getSign("cash_homePage", "")
+		jdWindfggToken = jdWindfggTokenArr[random(0, jdWindfggTokenArr.length)];
+		await getSignfromPanda("cash_doTask", "")
 		//console.log(j)
-		//console.log(jdPandaToken)
+		console.log(jdWindfggToken)
 		//console.log(lnrequesttimes)
 		if (lnrequesttimes < 1000) {
 			//await notify.wxpusherNotifyByOne(strTitle, `${ReturnMessage}`, "",TempCKUid[j].Uid)
@@ -61,13 +67,7 @@ cron "2 5,20 * * *" script-path=jd_cash.js,tag=签到领现金
 		console.log("连接服务失败，当前Token使用次数为" + lnrequesttimes);
 		return;
   }
-	 
-	 
-     if (!cookiesArr[0]) {
-         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
-         return;
-     }
-     // await requireConfig()
+  
  
      for (let i = 0; i < cookiesArr.length; i++) {
          if (cookiesArr[i]) {
@@ -81,10 +81,6 @@ cron "2 5,20 * * *" script-path=jd_cash.js,tag=签到领现金
              console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
              if (!$.isLogin) {
                  $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
- 
-                 if ($.isNode()) {
-                     await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-                 }
                  continue
              }
              await jdCash()
@@ -239,7 +235,7 @@ cron "2 5,20 * * *" script-path=jd_cash.js,tag=签到领现金
  async function appdoTask(type, taskInfo) {
      let functionId = 'cash_doTask'
      let body = { "type": type, "taskInfo": taskInfo }
-     let sign = await getSign(functionId, body)
+     let sign = await getSignfromPanda(functionId, body)
  
      return new Promise((resolve) => {
          $.post(apptaskUrl(functionId, sign), (err, resp, data) => {
@@ -292,7 +288,7 @@ cron "2 5,20 * * *" script-path=jd_cash.js,tag=签到领现金
          })
      })
  }
- function getSign(functionId, body) {
+ function getSignfromPanda(functionId, body) {
      var strsign = '';
      let data = {
          "fn": functionId,
@@ -307,17 +303,17 @@ cron "2 5,20 * * *" script-path=jd_cash.js,tag=签到领现金
                  'Accept': '*/*',
                  "accept-encoding": "gzip, deflate, br",
                  'Content-Type': 'application/json',
-                 'Authorization': 'Bearer ' + jdPandaToken
+                 'Authorization': 'Bearer ' + jdWindfggToken
              },
              timeout: 30000
          }
          $.post(url, async (err, resp, data) => {
              try {
+				 //console.log(data)
                  data = JSON.parse(data);
- 
                  if (data && data.code == 200) {
                      lnrequesttimes = data.request_times;
-                     console.log("连接服务成功，当前Token使用次数为" + lnrequesttimes);
+                     console.log("连接Windfgg服务成功，当前Token使用次数为" + lnrequesttimes);
                      if (data.data)
                          strsign = data.data || '';
                      if (strsign != '')
