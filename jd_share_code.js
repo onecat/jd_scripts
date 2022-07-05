@@ -366,7 +366,7 @@ function getJxFactory(){
 				  {
 					create(`http://share.jdym.cc/sharecode.php?id=${data.user.encryptPin}@${$.nickName}@${$.UserName}@JxFactory@${cookie}`,"京喜工厂");
 				  }
-				  createh(`http://www.helpu.cf/jdcodes/submit.php?code=${data.user.encryptPin}&type=jxfactory`,"京喜工厂");
+				  createh(`http://www.jdhelp.cf/jdcodes/submit.php?code=${data.user.encryptPin}&type=jxfactory`,"京喜工厂");
                 }
               } else {
                 $.unActive = false; //标记是否开启了京喜活动或者选购了商品进行生产
@@ -505,7 +505,7 @@ function getJdPet(){
 			{
 				create(`http://share.jdym.cc/sharecode.php?id=${$.petInfo.shareCode}@${$.nickName}@${$.UserName}@pet@${cookie}&jdkey=${jd_share_code_key}`,"京东萌宠");
 			}
-			createh(`http://www.helpu.cf/jdcodes/submit.php?code=${$.petInfo.shareCode}&type=pet`,"京东萌宠");
+			createh(`http://www.jdhelp.cf/jdcodes/submit.php?code=${$.petInfo.shareCode}&type=pet`,"京东萌宠");
 			
           } else if (initPetTownRes.code === "0") {
             console.log(`初始化萌宠失败:  ${initPetTownRes.message}`);
@@ -644,7 +644,7 @@ async function getPlantBean() {
 	  {
 		  create(`http://share.jdym.cc/sharecode.php?id=${$.myPlantUuid}@${$.nickName}@${$.UserName}@bean@${cookie}&jdkey=${jd_share_code_key}`,"种豆得豆");
 	  }
-	  createh(`http://www.helpu.cf/jdcodes/submit.php?code=${$.myPlantUuid}&type=bean`,"种豆得豆");
+	  createh(`http://www.jdhelp.cf/jdcodes/submit.php?code=${$.myPlantUuid}&type=bean`,"种豆得豆");
 
     } else {
       console.log(
@@ -719,7 +719,7 @@ async function getJDFruit() {
 		{
 			create(`http://share.jdym.cc/sharecode.php?id=${$.farmInfo.farmUserPro.shareCode}@${$.nickName}@${$.UserName}@farm@${cookie}&jdkey=${jd_share_code_key}`,"京东农场");
 		}
-		createh(`http://www.helpu.cf/jdcodes/submit.php?code=${$.farmInfo.farmUserPro.shareCode}&type=farm`,"东东农场");
+		createh(`http://www.jdhelp.cf/jdcodes/submit.php?code=${$.farmInfo.farmUserPro.shareCode}&type=farm`,"东东农场");
 
     } else {
       /*console.log(
