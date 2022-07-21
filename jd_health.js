@@ -59,7 +59,9 @@ const JD_API_HOST = "https://api.m.jd.com/";
 		$.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
 		$.index = i + 1;
 		console.log(`\n******开始【京东账号${$.index}】${$.UserName}*********\n`);
-		await exchange(2, 4)
+		//await exchange(2, 4)
+		await getCommodities()
+		await exchanges()
 		await $.wait(2000)
       }
     }
