@@ -1,5 +1,5 @@
 /*
-东东萌宠 更新地址： jd_pet.js
+东东萌宠 更新地址： jd_pet_help.js
 更新时间：2021-05-21
 活动入口：京东APP我的-更多工具-东东萌宠
 已支持IOS多京东账号,Node.js支持N个京东账号
@@ -11,17 +11,17 @@
 =================================Quantumultx=========================
 [task_local]
 #东东萌宠
-15 6-18/6 * * * jd_pet.js, tag=东东萌宠, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdmc.png, enabled=true
+15 3,10,16 * * * jd_pet_help.js, tag=东东萌宠, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdmc.png, enabled=true
 
 =================================Loon===================================
 [Script]
-cron "15 6-18/6 * * *" script-path=jd_pet.js,tag=东东萌宠
+cron "15 3,10,16 * * *" script-path=jd_pet_help.js,tag=东东萌宠
 
 ===================================Surge================================
-东东萌宠 = type=cron,cronexp="15 6-18/6 * * *",wake-system=1,timeout=3600,script-path=jd_pet.js
+东东萌宠 = type=cron,cronexp="15 3,10,16 * * *",wake-system=1,timeout=3600,script-path=jd_pet_help.js
 
 ====================================小火箭=============================
-东东萌宠 = type=cron,script-path=jd_pet.js, cronexpr="15 6-18/6 * * *", timeout=3600, enable=true
+东东萌宠 = type=cron,script-path=jd_pet_help.js, cronexpr="15 3,10,16 * * *", timeout=3600, enable=true
 
 */
 const $ = new Env('东东萌宠');
@@ -63,8 +63,9 @@ let randomCount = $.isNode() ? 20 : 5;
       goodsUrl = '';
       taskInfoKey = [];
       option = {};
-      //await shareCodesFormat();
-      await jdPet();
+      await shareCodesFormat();
+	  await slaveHelp();//助力好友
+      //await jdPet();
     }
   }
   if ($.isNode() && allMessage && $.ctrTemp) {
@@ -86,8 +87,7 @@ async function jdPet() {
       $.petInfo = initPetTownRes.result;
       if ($.petInfo.userStatus === 0) {
         // $.msg($.name, '', `【提示】京东账号${$.index}${$.nickName}\n萌宠活动未开启\n请手动去京东APP开启活动\n入口：我的->游戏与互动->查看更多开启`, { "open-url": "openapp.jdmoble://" });
-		await request('newUserGifts')
-        //await slaveHelp();//助力好友
+        await slaveHelp();//助力好友
         $.log($.name, '', `【提示】京东账号${$.index}${$.nickName}\n萌宠活动未开启\n请手动去京东APP开启活动\n入口：我的->游戏与互动->查看更多开启`);
         return
       }
@@ -100,7 +100,7 @@ async function jdPet() {
       // option['media-url'] = goodsUrl;
       // console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
       if ($.petInfo.petStatus === 5) {
-        //await slaveHelp();//可以兑换而没有去兑换,也能继续助力好友
+        await slaveHelp();//可以兑换而没有去兑换,也能继续助力好友
         option['open-url'] = "openApp.jdMobile://";
         $.msg($.name, ``, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.petInfo.goodsInfo.goodsName}已可领取\n请去京东APP或微信小程序查看\n点击弹窗即达`, option);
         if ($.isNode()) {
@@ -108,7 +108,7 @@ async function jdPet() {
         }
         return
       } else if ($.petInfo.petStatus === 6) {
-        //await slaveHelp();//已领取红包,但未领养新的,也能继续助力好友
+        await slaveHelp();//已领取红包,但未领养新的,也能继续助力好友
         option['open-url'] = "openApp.jdMobile://";
         $.msg($.name, ``, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】已领取红包,但未继续领养新的物品\n请去京东APP或微信小程序查看\n点击弹窗即达`, option);
         if ($.isNode()) {
@@ -125,7 +125,7 @@ async function jdPet() {
       $.taskInfo = $.taskInit.result;
 
       await petSport();//遛弯
-      //await slaveHelp();//助力好友
+      await slaveHelp();//助力好友
       await masterHelpInit();//获取助力的信息
       await doTask();//做日常任务
       await feedPetsAgain();//再次投食
@@ -276,7 +276,7 @@ async function slaveHelp() {
   //return
   let helpPeoples = '';
   for (let code of newShareCodes) {
-    console.log(`开始助力京东账号${$.index} - ${$.nickName}的好友: ${code}`);
+    console.log(`开始助力京东账号${$.index} - ${$.nickName || $.UserName}的好友: ${code}`);
     if (!code) continue;
     let response = await request(arguments.callee.name.toString(), {'shareCode': code});
     if (response.code === '0' && response.resultCode === '0') {
